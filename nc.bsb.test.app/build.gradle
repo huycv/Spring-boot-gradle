@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' apply false
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+dependencyManagement {
+    import {
+        mavenBom org.springframework.boot.gradle.plugin.springBootPlugin.BOM_COORDINATER
+    }
+}
+
+dependencies {
+    implementation project('nc.bsb.test.core')
+    implementation project('nc.bsb.test.infra')
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}

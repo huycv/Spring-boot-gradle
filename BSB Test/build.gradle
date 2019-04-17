@@ -1,0 +1,70 @@
+import org.gradle.api.Project
+
+// Apply java lib
+apply plugin: 'java'
+
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+// All project
+allprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    } 
+}
+
+ext {
+    // Dependencies version
+    lombokVersion = '1.18.4'
+    apacheCommonsIOVersion = '2.6'
+    apacheCommonsTextVersion = '1.6'
+    apacheCommonsCollectionVersion = '4.3'
+    apacheCommonsCSVVersion = '1.6'
+    jsonWebTokenVersion = '0.9.1'
+    springforSwaggerVersion = '2.9.2'
+    gsonVersion = '2.8.5'
+    eclipseLinkVersion = '2.7.4'
+    metadataExtractorVersion = '2.10.0'
+    jasperVersion = '6.7.1'
+    itextPdfVersion = '5.5.13'
+    itextVersion = '2.1.7'
+    thymeleafVersion = '3.0.11.RELEASE'
+    zxingVersion = '3.3.3'
+}
+
+// Sub project dependencies
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse-wtp'
+    version '1.0'
+    // Base name for all project.
+    tasks.withType(Jar) {
+        baseName = "$project.parent.name-$project.name"
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+    dependencies {
+        implementation("org.projectlombok:lombok:${lombokVersion}")
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        implementation "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
+        implementation "org.apache.commons:commons-collections4:${apacheCommonsCollectionVersion}"
+        implementation "commons-io:commons-io:${apacheCommonsIOVersion}"
+        implementation "org.apache.commons:commons-csv:${apacheCommonCSVVersion}"
+        implementation "com.google.code.gson:gson:${gsonVersion}"
+    }
+}
